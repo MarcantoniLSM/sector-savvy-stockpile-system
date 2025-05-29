@@ -38,12 +38,14 @@ const ProductManager = ({ sectors, selectedSector, onSectorSelect }: ProductMana
 
   useEffect(() => {
     loadProducts();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedSector]);
 
   useEffect(() => {
     if (selectedSector && !newProduct.sectorId) {
       setNewProduct(prev => ({ ...prev, sectorId: selectedSector }));
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedSector]);
 
   const loadProducts = () => {
@@ -69,8 +71,8 @@ const ProductManager = ({ sectors, selectedSector, onSectorSelect }: ProductMana
       loadProducts();
       
       toast({
-        title: "Product created",
-        description: `Product "${newProduct.name}" has been added successfully.`,
+        title: "Produto criado",
+        description: `Produto "${newProduct.name}" foi adicionado com sucesso.`,
       });
     }
   };
@@ -88,7 +90,7 @@ const ProductManager = ({ sectors, selectedSector, onSectorSelect }: ProductMana
           selectedProduct.quantity + quantityChange,
           'add'
         );
-        message = `Added ${quantityChange} units to ${selectedProduct.name}`;
+        message = `Adicionadas ${quantityChange} unidades a ${selectedProduct.name}`;
         break;
       
       case 'subtract':
@@ -98,11 +100,11 @@ const ProductManager = ({ sectors, selectedSector, onSectorSelect }: ProductMana
             selectedProduct.quantity - quantityChange,
             'subtract'
           );
-          message = `Subtracted ${quantityChange} units from ${selectedProduct.name}`;
+          message = ` ${quantityChange} subtraídas de ${selectedProduct.name}`;
         } else {
           toast({
-            title: "Invalid operation",
-            description: "Cannot subtract more units than available in stock.",
+            title: "Operação inválida",
+            description: "Não é possível subtrair mais do que há disponível no estoque.",
             variant: "destructive",
           });
           return;
@@ -111,12 +113,12 @@ const ProductManager = ({ sectors, selectedSector, onSectorSelect }: ProductMana
       
       case 'lend':
         success = inventoryService.lendProduct(selectedProduct.id, quantityChange);
-        message = `Lent ${quantityChange} units of ${selectedProduct.name}`;
+        message = `${quantityChange} unidades emprestadas de ${selectedProduct.name}`;
         break;
       
       case 'return':
         success = inventoryService.returnProduct(selectedProduct.id, quantityChange);
-        message = `Returned ${quantityChange} units of ${selectedProduct.name}`;
+        message = `${quantityChange} unidades devolvidas de ${selectedProduct.name}`;
         break;
     }
 
@@ -126,7 +128,7 @@ const ProductManager = ({ sectors, selectedSector, onSectorSelect }: ProductMana
       setSelectedProduct(null);
       loadProducts();
       toast({
-        title: "Operation successful",
+        title: "Sucesso",
         description: message,
       });
     }
@@ -136,8 +138,8 @@ const ProductManager = ({ sectors, selectedSector, onSectorSelect }: ProductMana
     inventoryService.deleteProduct(product.id);
     loadProducts();
     toast({
-      title: "Product deleted",
-      description: `Product "${product.name}" has been deleted.`,
+      title: "Produto removido",
+      description: `"${product.name}" foi deletado.`,
       variant: "destructive",
     });
   };
@@ -161,15 +163,15 @@ const ProductManager = ({ sectors, selectedSector, onSectorSelect }: ProductMana
     const badges = [];
     
     if (product.status === 'lent') {
-      badges.push(<Badge key="lent" variant="secondary">Lent</Badge>);
+      badges.push(<Badge key="lent" variant="secondary">Emprestados</Badge>);
     }
     
     if (product.expirationDate && inventoryService.isNearExpiration(product.expirationDate)) {
-      badges.push(<Badge key="expiring" variant="destructive">Near Expiration</Badge>);
+      badges.push(<Badge key="expiring" variant="destructive">Próximo do vencimento</Badge>);
     }
     
     if (inventoryService.isLowStock(product.quantity)) {
-      badges.push(<Badge key="lowstock" variant="outline" className="border-orange-500 text-orange-600">Low Stock</Badge>);
+      badges.push(<Badge key="lowstock" variant="outline" className="border-orange-500 text-orange-600">Estoque baixo</Badge>);
     }
     
     return badges;
@@ -180,11 +182,11 @@ const ProductManager = ({ sectors, selectedSector, onSectorSelect }: ProductMana
       <Card>
         <CardContent className="text-center py-12">
           <Package className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">Select a sector</h3>
-          <p className="text-gray-500 mb-4">Choose a sector to manage its products</p>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">Selecione um setor</h3>
+          <p className="text-gray-500 mb-4">Escolha um setor para gerenciar</p>
           <Select onValueChange={onSectorSelect}>
             <SelectTrigger className="w-64 mx-auto">
-              <SelectValue placeholder="Select a sector" />
+              <SelectValue placeholder="Selecione um setor" />
             </SelectTrigger>
             <SelectContent>
               {sectors.map((sector) => (
@@ -205,9 +207,9 @@ const ProductManager = ({ sectors, selectedSector, onSectorSelect }: ProductMana
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Product Management</h2>
+          <h2 className="text-2xl font-bold text-gray-900">Gerenciamento de produtos</h2>
           <p className="text-gray-600">
-            Managing products in: <span className="font-medium">{currentSector?.name}</span>
+            Gerenciando os produtos de: <span className="font-medium">{currentSector?.name}</span>
           </p>
         </div>
         <div className="flex gap-2">
@@ -228,28 +230,28 @@ const ProductManager = ({ sectors, selectedSector, onSectorSelect }: ProductMana
             <DialogTrigger asChild>
               <Button>
                 <Plus className="h-4 w-4 mr-2" />
-                Add Product
+                Adicionar produto
               </Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Add New Product</DialogTitle>
+                <DialogTitle>Adicionar novo produto</DialogTitle>
                 <DialogDescription>
-                  Add a new product to the {currentSector?.name} sector.
+                  Adicionar novo produto ao setor {currentSector?.name}.
                 </DialogDescription>
               </DialogHeader>
               <div className="space-y-4">
                 <div>
-                  <Label htmlFor="productName">Product Name *</Label>
+                  <Label htmlFor="productName">Nome do produto *</Label>
                   <Input
                     id="productName"
                     value={newProduct.name}
                     onChange={(e) => setNewProduct(prev => ({ ...prev, name: e.target.value }))}
-                    placeholder="Enter product name..."
+                    placeholder="Digite o nome do produto"
                   />
                 </div>
                 <div>
-                  <Label htmlFor="productQuantity">Quantity *</Label>
+                  <Label htmlFor="productQuantity">Quantidade *</Label>
                   <Input
                     id="productQuantity"
                     type="number"
@@ -259,7 +261,7 @@ const ProductManager = ({ sectors, selectedSector, onSectorSelect }: ProductMana
                   />
                 </div>
                 <div>
-                  <Label htmlFor="expirationDate">Expiration Date (Optional)</Label>
+                  <Label htmlFor="expirationDate">Data de validade (Opcional)</Label>
                   <Input
                     id="expirationDate"
                     type="date"
@@ -272,9 +274,9 @@ const ProductManager = ({ sectors, selectedSector, onSectorSelect }: ProductMana
                     setIsCreateDialogOpen(false);
                     resetForm();
                   }}>
-                    Cancel
+                    Cancelar
                   </Button>
-                  <Button onClick={handleCreateProduct}>Create</Button>
+                  <Button onClick={handleCreateProduct}>Criar</Button>
                 </div>
               </div>
             </DialogContent>
@@ -285,20 +287,20 @@ const ProductManager = ({ sectors, selectedSector, onSectorSelect }: ProductMana
       {products.length > 0 ? (
         <Card>
           <CardHeader>
-            <CardTitle>Products in {currentSector?.name}</CardTitle>
+            <CardTitle>Produtos em {currentSector?.name}</CardTitle>
             <CardDescription>
-              {products.length} product{products.length !== 1 ? 's' : ''} registered
+              {products.length} produto {products.length !== 1 ? 's' : ''} registrado
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Quantity</TableHead>
-                  <TableHead>Expiration Date</TableHead>
+                  <TableHead>Nome</TableHead>
+                  <TableHead>Quantidade</TableHead>
+                  <TableHead>Data de validade</TableHead>
                   <TableHead>Status</TableHead>
-                  <TableHead>Actions</TableHead>
+                  <TableHead>Ações</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -309,7 +311,7 @@ const ProductManager = ({ sectors, selectedSector, onSectorSelect }: ProductMana
                     <TableCell>
                       {product.expirationDate 
                         ? new Date(product.expirationDate).toLocaleDateString()
-                        : 'No expiration'
+                        : 'Sem validade'
                       }
                     </TableCell>
                     <TableCell>
@@ -355,18 +357,18 @@ const ProductManager = ({ sectors, selectedSector, onSectorSelect }: ProductMana
                           </AlertDialogTrigger>
                           <AlertDialogContent>
                             <AlertDialogHeader>
-                              <AlertDialogTitle>Delete Product</AlertDialogTitle>
+                              <AlertDialogTitle>Deletar Produto</AlertDialogTitle>
                               <AlertDialogDescription>
-                                Are you sure you want to delete "{product.name}"? This action cannot be undone.
+                                Você tem certeza de que deseja deletar "{product.name}"? Essa ação não pode ser desfeita.
                               </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
-                              <AlertDialogCancel>Cancel</AlertDialogCancel>
+                              <AlertDialogCancel>Cancelar</AlertDialogCancel>
                               <AlertDialogAction
                                 onClick={() => handleDeleteProduct(product)}
                                 className="bg-red-600 hover:bg-red-700"
                               >
-                                Delete
+                                Deletar
                               </AlertDialogAction>
                             </AlertDialogFooter>
                           </AlertDialogContent>
@@ -383,8 +385,8 @@ const ProductManager = ({ sectors, selectedSector, onSectorSelect }: ProductMana
         <Card>
           <CardContent className="text-center py-12">
             <Package className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No products found</h3>
-            <p className="text-gray-500">Add your first product to this sector</p>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">Nenhum produto encontrado</h3>
+            <p className="text-gray-500">Adicione produtos a esse setor</p>
           </CardContent>
         </Card>
       )}
@@ -394,25 +396,25 @@ const ProductManager = ({ sectors, selectedSector, onSectorSelect }: ProductMana
         <DialogContent>
           <DialogHeader>
             <DialogTitle>
-              {quantityAction === 'add' && 'Add Units'}
-              {quantityAction === 'subtract' && 'Subtract Units'}
-              {quantityAction === 'lend' && 'Lend Units'}
-              {quantityAction === 'return' && 'Return Units'}
+              {quantityAction === 'add' && 'Adicionar unidades'}
+              {quantityAction === 'subtract' && 'Subtrair unidades'}
+              {quantityAction === 'lend' && 'Emprestar unidades'}
+              {quantityAction === 'return' && 'Devolver'}
             </DialogTitle>
             <DialogDescription>
-              {quantityAction === 'add' && 'Add units to the product inventory'}
-              {quantityAction === 'subtract' && 'Remove units from the product inventory'}
-              {quantityAction === 'lend' && 'Lend units (they will be marked as lent)'}
-              {quantityAction === 'return' && 'Return previously lent units'}
+              {quantityAction === 'add' && 'Adicionar unidades do produto'}
+              {quantityAction === 'subtract' && 'Remover unidades do produto'}
+              {quantityAction === 'lend' && 'Emprestar unidades do produto'}
+              {quantityAction === 'return' && 'Devolver unidades previamente emprestadas'}
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
             <div>
-              <Label>Product: {selectedProduct?.name}</Label>
-              <p className="text-sm text-gray-500">Current quantity: {selectedProduct?.quantity}</p>
+              <Label>Produto: {selectedProduct?.name}</Label>
+              <p className="text-sm text-gray-500">Quantidade atual: {selectedProduct?.quantity}</p>
             </div>
             <div>
-              <Label htmlFor="quantityChange">Quantity</Label>
+              <Label htmlFor="quantityChange">Quantidade</Label>
               <Input
                 id="quantityChange"
                 type="number"
@@ -426,13 +428,13 @@ const ProductManager = ({ sectors, selectedSector, onSectorSelect }: ProductMana
                 setIsQuantityDialogOpen(false);
                 setQuantityChange(0);
               }}>
-                Cancel
+                Cancelar
               </Button>
               <Button onClick={handleQuantityAction}>
-                {quantityAction === 'add' && 'Add'}
-                {quantityAction === 'subtract' && 'Subtract'}
-                {quantityAction === 'lend' && 'Lend'}
-                {quantityAction === 'return' && 'Return'}
+                {quantityAction === 'add' && 'Adicionar'}
+                {quantityAction === 'subtract' && 'Subtrair'}
+                {quantityAction === 'lend' && 'Emprestar'}
+                {quantityAction === 'return' && 'Devolver'}
               </Button>
             </div>
           </div>

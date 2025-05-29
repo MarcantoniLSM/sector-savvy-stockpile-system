@@ -44,16 +44,16 @@ const Index = () => {
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Sectoral Inventory System</h1>
-          <p className="text-gray-600">Manage your inventory by sectors with comprehensive tracking</p>
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">Sistema de gerenciamento setorial</h1>
+          <p className="text-gray-600">Gerencie seu inventário por setores</p>
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="sectors">Sectors</TabsTrigger>
-            <TabsTrigger value="products">Products</TabsTrigger>
-            <TabsTrigger value="history">History</TabsTrigger>
+            <TabsTrigger value="sectors">Setores</TabsTrigger>
+            <TabsTrigger value="products">Produtos</TabsTrigger>
+            <TabsTrigger value="history">Histórico</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview" className="space-y-6">
@@ -67,25 +67,25 @@ const Index = () => {
                         <Package className="h-5 w-5" />
                         {sector.name}
                       </CardTitle>
-                      <CardDescription>Sector inventory overview</CardDescription>
+                      <CardDescription>Visão geral</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div className="grid grid-cols-2 gap-4">
                         <div className="text-center">
                           <div className="text-2xl font-bold text-blue-600">{stats.totalItems}</div>
-                          <div className="text-sm text-gray-500">Total Items</div>
+                          <div className="text-sm text-gray-500">Total de itens</div>
                         </div>
                         <div className="text-center">
                           <div className="text-2xl font-bold text-orange-600">{stats.nearExpiration}</div>
-                          <div className="text-sm text-gray-500">Near Expiration</div>
+                          <div className="text-sm text-gray-500">Próximos da validade</div>
                         </div>
                         <div className="text-center">
                           <div className="text-2xl font-bold text-red-600">{stats.lowStock}</div>
-                          <div className="text-sm text-gray-500">Low Stock</div>
+                          <div className="text-sm text-gray-500">Estoque baixo</div>
                         </div>
                         <div className="text-center">
                           <div className="text-2xl font-bold text-purple-600">{stats.lentItems}</div>
-                          <div className="text-sm text-gray-500">Lent Items</div>
+                          <div className="text-sm text-gray-500">Itens emprestados</div>
                         </div>
                       </div>
                       <Button 
@@ -96,7 +96,7 @@ const Index = () => {
                           setActiveTab('products');
                         }}
                       >
-                        Manage Products
+                        Gerenciar produtos
                       </Button>
                     </CardContent>
                   </Card>
@@ -107,11 +107,11 @@ const Index = () => {
                 <Card className="col-span-full">
                   <CardContent className="text-center py-12">
                     <Package className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-lg font-medium text-gray-900 mb-2">No sectors created</h3>
-                    <p className="text-gray-500 mb-4">Get started by creating your first sector</p>
+                    <h3 className="text-lg font-medium text-gray-900 mb-2">Nenhum setor criado</h3>
+                    <p className="text-gray-500 mb-4">comece criando setores</p>
                     <Button onClick={() => setActiveTab('sectors')}>
                       <Plus className="h-4 w-4 mr-2" />
-                      Create Sector
+                      Criar setor
                     </Button>
                   </CardContent>
                 </Card>
