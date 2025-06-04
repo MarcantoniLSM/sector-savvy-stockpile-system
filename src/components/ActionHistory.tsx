@@ -20,6 +20,7 @@ const ActionHistory = () => {
   };
 
   const getActionBadge = (action: ActionHistoryType['type']) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const variants: Record<ActionHistoryType['type'], { variant: any; label: string }> = {
       add: { variant: 'default', label: 'Added' },
       subtract: { variant: 'secondary', label: 'Subtracted' },
@@ -45,29 +46,29 @@ const ActionHistory = () => {
       <div>
         <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
           <History className="h-6 w-6" />
-          Action History
+          Histórico
         </h2>
-        <p className="text-gray-600">Complete log of all inventory operations</p>
+        <p className="text-gray-600">Log completo de todas as operações dos inventários</p>
       </div>
 
       {history.length > 0 ? (
         <Card>
           <CardHeader>
-            <CardTitle>Recent Activities</CardTitle>
+            <CardTitle>Atividades recentes</CardTitle>
             <CardDescription>
-              {history.length} action{history.length !== 1 ? 's' : ''} recorded
+              {history.length} Ações registradas
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Action</TableHead>
-                  <TableHead>Product</TableHead>
-                  <TableHead>Sector</TableHead>
-                  <TableHead>Quantity</TableHead>
-                  <TableHead>Date & Time</TableHead>
-                  <TableHead>Responsible</TableHead>
+                  <TableHead>Ação</TableHead>
+                  <TableHead>Produto</TableHead>
+                  <TableHead>Setor</TableHead>
+                  <TableHead>Quantidade</TableHead>
+                  <TableHead>Data e hora</TableHead>
+                  <TableHead>Responsável</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -106,8 +107,7 @@ const ActionHistory = () => {
         <Card>
           <CardContent className="text-center py-12">
             <History className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No actions recorded</h3>
-            <p className="text-gray-500">Start managing your inventory to see activity history here</p>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">Nenhuma ação encontrada</h3>
           </CardContent>
         </Card>
       )}

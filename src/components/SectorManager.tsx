@@ -1,15 +1,37 @@
-
-import { useState, useEffect } from 'react';
-import { Plus, Edit, Trash2, Package } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
-import { toast } from '@/hooks/use-toast';
-import { Sector } from '@/types/inventory';
-import { inventoryService } from '@/services/inventoryService';
+import { useState, useEffect } from "react";
+import { Plus, Edit, Trash2, Package } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { toast } from "@/hooks/use-toast";
+import { Sector } from "@/types/inventory";
+import { inventoryService } from "@/services/inventoryService";
 
 interface SectorManagerProps {
   onSectorUpdate: () => void;
@@ -17,7 +39,7 @@ interface SectorManagerProps {
 
 const SectorManager = ({ onSectorUpdate }: SectorManagerProps) => {
   const [sectors, setSectors] = useState<Sector[]>([]);
-  const [newSectorName, setNewSectorName] = useState('');
+  const [newSectorName, setNewSectorName] = useState("");
   const [editingSector, setEditingSector] = useState<Sector | null>(null);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -34,13 +56,13 @@ const SectorManager = ({ onSectorUpdate }: SectorManagerProps) => {
   const handleCreateSector = () => {
     if (newSectorName.trim()) {
       inventoryService.createSector(newSectorName.trim());
-      setNewSectorName('');
+      setNewSectorName("");
       setIsCreateDialogOpen(false);
       loadSectors();
       onSectorUpdate();
       toast({
-        title: "Sector created",
-        description: `Sector "${newSectorName}" has been created successfully.`,
+        title: "Setor criado",
+        description: `O setor "${newSectorName}" foi criado com sucesso.`,
       });
     }
   };
@@ -49,13 +71,13 @@ const SectorManager = ({ onSectorUpdate }: SectorManagerProps) => {
     if (editingSector && newSectorName.trim()) {
       inventoryService.updateSector(editingSector.id, newSectorName.trim());
       setEditingSector(null);
-      setNewSectorName('');
+      setNewSectorName("");
       setIsEditDialogOpen(false);
       loadSectors();
       onSectorUpdate();
       toast({
-        title: "Sector updated",
-        description: `Sector has been renamed to "${newSectorName}".`,
+        title: "Atualização do setor",
+        description: `O setor foi renomeado para "${newSectorName}".`,
       });
     }
   };
@@ -65,8 +87,8 @@ const SectorManager = ({ onSectorUpdate }: SectorManagerProps) => {
     loadSectors();
     onSectorUpdate();
     toast({
-      title: "Sector deleted",
-      description: `Sector "${sector.name}" and all its products have been deleted.`,
+      title: "Setor deletado",
+      description: `O sector "${sector.name}" e seus produtos foram deletados.`,
       variant: "destructive",
     });
   };
@@ -81,39 +103,44 @@ const SectorManager = ({ onSectorUpdate }: SectorManagerProps) => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Sector Management</h2>
-          <p className="text-gray-600">Create and manage inventory sectors</p>
+          <h2 className="text-2xl font-bold text-gray-900">
+            Gerenciamento de setores
+          </h2>
+          <p className="text-gray-600">Crie e gerencie os setores</p>
         </div>
         <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
           <DialogTrigger asChild>
             <Button>
               <Plus className="h-4 w-4 mr-2" />
-              Add Sector
+              Adicionar setor
             </Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Create New Sector</DialogTitle>
+              <DialogTitle>Criar novo setor</DialogTitle>
               <DialogDescription>
-                Enter a name for the new inventory sector.
+                Digite um nome para o setor{" "}
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-4">
               <div>
-                <Label htmlFor="sectorName">Sector Name</Label>
+                <Label htmlFor="sectorName">Nome do setor</Label>
                 <Input
                   id="sectorName"
                   value={newSectorName}
                   onChange={(e) => setNewSectorName(e.target.value)}
                   placeholder="Enter sector name..."
-                  onKeyPress={(e) => e.key === 'Enter' && handleCreateSector()}
+                  onKeyPress={(e) => e.key === "Enter" && handleCreateSector()}
                 />
               </div>
               <div className="flex justify-end space-x-2">
-                <Button variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
-                  Cancel
+                <Button
+                  variant="outline"
+                  onClick={() => setIsCreateDialogOpen(false)}
+                >
+                  Cancelar
                 </Button>
-                <Button onClick={handleCreateSector}>Create</Button>
+                <Button onClick={handleCreateSector}>Criar</Button>
               </div>
             </div>
           </DialogContent>
@@ -129,7 +156,7 @@ const SectorManager = ({ onSectorUpdate }: SectorManagerProps) => {
                 {sector.name}
               </CardTitle>
               <CardDescription>
-                Created: {new Date(sector.createdAt).toLocaleDateString()}
+                Criado: {new Date(sector.createdAt).toLocaleDateString()}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -149,18 +176,20 @@ const SectorManager = ({ onSectorUpdate }: SectorManagerProps) => {
                   </AlertDialogTrigger>
                   <AlertDialogContent>
                     <AlertDialogHeader>
-                      <AlertDialogTitle>Delete Sector</AlertDialogTitle>
+                      <AlertDialogTitle>Deletar setor</AlertDialogTitle>
                       <AlertDialogDescription>
-                        Are you sure you want to delete "{sector.name}"? This will also delete all products in this sector. This action cannot be undone.
+                        Você tem certeza de que deseja deletar o setor "
+                        {sector.name}"? Isso também vai deletar todos os
+                        produtor nele. Essa ação não pode ser desfeita.
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogCancel>Cancelar</AlertDialogCancel>
                       <AlertDialogAction
                         onClick={() => handleDeleteSector(sector)}
                         className="bg-red-600 hover:bg-red-700"
                       >
-                        Delete
+                        Deletar
                       </AlertDialogAction>
                     </AlertDialogFooter>
                   </AlertDialogContent>
@@ -175,8 +204,12 @@ const SectorManager = ({ onSectorUpdate }: SectorManagerProps) => {
         <Card>
           <CardContent className="text-center py-12">
             <Package className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No sectors found</h3>
-            <p className="text-gray-500">Create your first sector to start managing inventory</p>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">
+              Nenhum setor encontrado
+            </h3>
+            <p className="text-gray-500">
+              Crie setores para gerenciar
+            </p>
           </CardContent>
         </Card>
       )}
@@ -184,27 +217,28 @@ const SectorManager = ({ onSectorUpdate }: SectorManagerProps) => {
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Edit Sector</DialogTitle>
-            <DialogDescription>
-              Update the sector name.
-            </DialogDescription>
+            <DialogTitle>Editar setor</DialogTitle>
+            <DialogDescription>Atualizar o nome do setor.</DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
             <div>
-              <Label htmlFor="editSectorName">Sector Name</Label>
+              <Label htmlFor="editSectorName">Nome do setor</Label>
               <Input
                 id="editSectorName"
                 value={newSectorName}
                 onChange={(e) => setNewSectorName(e.target.value)}
-                placeholder="Enter sector name..."
-                onKeyPress={(e) => e.key === 'Enter' && handleEditSector()}
+                placeholder="Digite um nome para o setor..."
+                onKeyPress={(e) => e.key === "Enter" && handleEditSector()}
               />
             </div>
             <div className="flex justify-end space-x-2">
-              <Button variant="outline" onClick={() => setIsEditDialogOpen(false)}>
-                Cancel
+              <Button
+                variant="outline"
+                onClick={() => setIsEditDialogOpen(false)}
+              >
+                Cancelar
               </Button>
-              <Button onClick={handleEditSector}>Update</Button>
+              <Button onClick={handleEditSector}>Atualizar</Button>
             </div>
           </div>
         </DialogContent>
