@@ -20,6 +20,16 @@ services:
     networks:
       - app-network
 
+  frontend:
+    build: ./frontend
+    container_name: frontend_zoonoses
+    ports:
+      - "5173:80" # 5173 na sua máquina → 80 no container NGINX
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
   db:
     image: postgres:15
     container_name: db_zoonoses
