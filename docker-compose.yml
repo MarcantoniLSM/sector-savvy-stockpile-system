@@ -1,0 +1,42 @@
+version: '3.9'
+
+services:
+  backend:
+    build: ./backend
+    container_name: backend_zoonoses
+    ports:
+      - "3333:3333"
+    depends_on:
+      - db
+    environment:
+      - DB_NAME=zoonoses_estoque
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_HOST=db
+      - DB_PORT=5432
+      - SECRET=Zoonoses_Super_Secret_Key
+    volumes:
+      - ./backend:/app
+    networks:
+      - app-network
+
+  db:
+    image: postgres:15
+    container_name: db_zoonoses
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: zoonoses_estoque
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+volumes:
+  postgres-data:
+
+networks:
+  app-network:
+    driver: bridge

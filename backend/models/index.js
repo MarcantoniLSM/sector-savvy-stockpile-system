@@ -6,6 +6,8 @@ const Fornecedor = require('./Fornecedor');
 const Usuario = require('./Usuario');
 const EntradaEstoque = require('./EntradaEstoque');
 const SaidaEstoque = require('./SaidaEstoque');
+const Setor = require('./Setor');
+
 
 // Relacionamentos
 Produto.belongsTo(Categoria);
@@ -20,6 +22,10 @@ Produto.hasMany(EntradaEstoque);
 SaidaEstoque.belongsTo(Produto);
 Produto.hasMany(SaidaEstoque);
 
+// Produto pertence a um Setor
+Produto.belongsTo(Setor);
+Setor.hasMany(Produto);
+
 module.exports = {
     sequelize,
     Produto,
@@ -27,5 +33,7 @@ module.exports = {
     Fornecedor,
     Usuario,
     EntradaEstoque,
-    SaidaEstoque
+    SaidaEstoque,
+    Setor
 };
+
